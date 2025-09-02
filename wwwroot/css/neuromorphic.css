@@ -1,0 +1,474 @@
+/* Neurmorphic Soft UI Styles */
+/* Paleta de colores azules y blancos */
+
+:root {
+    /* Colores principales */
+    --primary-bg: #f0f4ff;
+    --secondary-bg: #ffffff;
+    --primary-blue: #4a90e2;
+    --secondary-blue: #6bb6ff;
+    --dark-blue: #2c5282;
+    --light-blue: #bee3f8;
+    --accent-blue: #3182ce;
+    
+    /* Sombras neuromórficas */
+    --shadow-light: #ffffff;
+    --shadow-dark: #d1dce8;
+    --shadow-inset-light: inset 5px 5px 10px #d1dce8;
+    --shadow-inset-dark: inset -5px -5px 10px #ffffff;
+    --shadow-convex: 5px 5px 10px #d1dce8, -5px -5px 10px #ffffff;
+    --shadow-concave: inset 5px 5px 10px #d1dce8, inset -5px -5px 10px #ffffff;
+    
+    /* Tipografía */
+    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --font-size-base: 16px;
+    --font-weight-light: 300;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-bold: 600;
+    
+    /* Bordes */
+    --border-radius-sm: 8px;
+    --border-radius-md: 12px;
+    --border-radius-lg: 16px;
+    --border-radius-xl: 20px;
+    
+    /* Espaciado */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+}
+
+/* Reset y configuración base */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(135deg, var(--primary-bg) 0%, #e8f2ff 100%);
+    font-family: var(--font-family);
+    color: var(--dark-blue);
+    min-height: 100vh;
+    margin: 0;
+}
+
+/* Contenedores neuromórficos */
+.neuro-container {
+    background: var(--secondary-bg);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-convex);
+    padding: var(--spacing-lg);
+    margin: var(--spacing-md);
+}
+
+.neuro-card {
+    background: var(--secondary-bg);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-convex);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.neuro-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 8px 8px 16px #d1dce8, -8px -8px 16px #ffffff;
+}
+
+.neuro-card-flat {
+    background: var(--primary-bg);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-concave);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+    border: none;
+}
+
+/* Botones neuromórficos */
+.neuro-btn {
+    background: var(--primary-bg);
+    border: none;
+    border-radius: var(--border-radius-sm);
+    box-shadow: var(--shadow-convex);
+    color: var(--dark-blue);
+    font-weight: var(--font-weight-medium);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    transition: all 0.2s ease;
+    cursor: pointer;
+    font-size: var(--font-size-base);
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.neuro-btn:hover {
+    box-shadow: var(--shadow-concave);
+    transform: scale(0.98);
+    color: var(--dark-blue);
+    text-decoration: none;
+}
+
+.neuro-btn:active {
+    box-shadow: var(--shadow-concave);
+    transform: scale(0.96);
+}
+
+.neuro-btn-primary {
+    background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+    color: white;
+    box-shadow: 5px 5px 10px rgba(74, 144, 226, 0.3), -5px -5px 10px rgba(255, 255, 255, 0.8);
+}
+
+.neuro-btn-primary:hover {
+    color: white;
+    box-shadow: inset 5px 5px 10px rgba(44, 82, 130, 0.3), inset -5px -5px 10px rgba(107, 182, 255, 0.3);
+}
+
+.neuro-btn-success {
+    background: linear-gradient(135deg, #48bb78, #68d391);
+    color: white;
+    box-shadow: 5px 5px 10px rgba(72, 187, 120, 0.3), -5px -5px 10px rgba(255, 255, 255, 0.8);
+}
+
+.neuro-btn-success:hover {
+    color: white;
+    box-shadow: inset 5px 5px 10px rgba(34, 84, 61, 0.3), inset -5px -5px 10px rgba(104, 211, 145, 0.3);
+}
+
+.neuro-btn-warning {
+    background: linear-gradient(135deg, #ed8936, #fbd38d);
+    color: white;
+    box-shadow: 5px 5px 10px rgba(237, 137, 54, 0.3), -5px -5px 10px rgba(255, 255, 255, 0.8);
+}
+
+.neuro-btn-warning:hover {
+    color: white;
+    box-shadow: inset 5px 5px 10px rgba(154, 68, 12, 0.3), inset -5px -5px 10px rgba(251, 211, 141, 0.3);
+}
+
+.neuro-btn-danger {
+    background: linear-gradient(135deg, #f56565, #fc8181);
+    color: white;
+    box-shadow: 5px 5px 10px rgba(245, 101, 101, 0.3), -5px -5px 10px rgba(255, 255, 255, 0.8);
+}
+
+.neuro-btn-danger:hover {
+    color: white;
+    box-shadow: inset 5px 5px 10px rgba(153, 27, 27, 0.3), inset -5px -5px 10px rgba(252, 129, 129, 0.3);
+}
+
+.neuro-btn-secondary {
+    background: linear-gradient(135deg, #718096, #a0aec0);
+    color: white;
+    box-shadow: 5px 5px 10px rgba(113, 128, 150, 0.3), -5px -5px 10px rgba(255, 255, 255, 0.8);
+}
+
+.neuro-btn-secondary:hover {
+    color: white;
+    box-shadow: inset 5px 5px 10px rgba(45, 55, 72, 0.3), inset -5px -5px 10px rgba(160, 174, 192, 0.3);
+}
+
+.neuro-btn-sm {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: 0.875rem;
+    border-radius: 6px;
+}
+
+/* Formularios neuromórficos */
+.neuro-form-control {
+    background: var(--primary-bg);
+    border: none;
+    border-radius: var(--border-radius-sm);
+    box-shadow: var(--shadow-concave);
+    padding: var(--spacing-sm) var(--spacing-md);
+    color: var(--dark-blue);
+    font-size: var(--font-size-base);
+    transition: all 0.2s ease;
+    width: 100%;
+}
+
+.neuro-form-control:focus {
+    outline: none;
+    box-shadow: inset 3px 3px 6px #d1dce8, inset -3px -3px 6px #ffffff, 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+.neuro-form-control::placeholder {
+    color: #a0aec0;
+}
+
+.neuro-form-group {
+    margin-bottom: var(--spacing-lg);
+}
+
+.neuro-label {
+    color: var(--dark-blue);
+    font-weight: var(--font-weight-medium);
+    margin-bottom: var(--spacing-sm);
+    display: block;
+}
+
+/* Navegación neuromórfica */
+.neuro-navbar {
+    background: var(--secondary-bg);
+    box-shadow: 0 2px 10px rgba(209, 220, 232, 0.5);
+    border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
+    padding: var(--spacing-md) 0;
+}
+
+.neuro-nav-brand {
+    background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+    color: white;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: var(--border-radius-sm);
+    box-shadow: 3px 3px 6px rgba(74, 144, 226, 0.3);
+    text-decoration: none;
+    font-weight: var(--font-weight-bold);
+    transition: all 0.2s ease;
+}
+
+.neuro-nav-brand:hover {
+    color: white;
+    text-decoration: none;
+    transform: translateY(-1px);
+    box-shadow: 4px 4px 8px rgba(74, 144, 226, 0.4);
+}
+
+.neuro-nav-link {
+    color: var(--dark-blue);
+    text-decoration: none;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius-sm);
+    transition: all 0.2s ease;
+    margin: 0 var(--spacing-xs);
+}
+
+.neuro-nav-link:hover {
+    color: var(--primary-blue);
+    text-decoration: none;
+    background: var(--primary-bg);
+    box-shadow: var(--shadow-concave);
+}
+
+/* Tarjetas Kanban neuromórficas */
+.neuro-kanban-column {
+    background: var(--primary-bg);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-concave);
+    padding: var(--spacing-lg);
+    min-height: 500px;
+}
+
+.neuro-kanban-header {
+    background: var(--secondary-bg);
+    border-radius: var(--border-radius-md) var(--border-radius-md) 0 0;
+    box-shadow: 0 2px 4px rgba(209, 220, 232, 0.3);
+    padding: var(--spacing-md);
+    margin: calc(var(--spacing-lg) * -1) calc(var(--spacing-lg) * -1) var(--spacing-md) calc(var(--spacing-lg) * -1);
+}
+
+.neuro-kanban-header.todo {
+    background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);
+    color: white;
+}
+
+.neuro-kanban-header.progress {
+    background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+    color: white;
+}
+
+.neuro-kanban-header.completed {
+    background: linear-gradient(135deg, #48bb78, #68d391);
+    color: white;
+}
+
+.neuro-task-card {
+    background: var(--secondary-bg);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-convex);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+}
+
+.neuro-task-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 8px 8px 16px #d1dce8, -8px -8px 16px #ffffff;
+}
+
+/* Badges neuromórficos */
+.neuro-badge {
+    background: var(--primary-bg);
+    color: var(--dark-blue);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+    box-shadow: var(--shadow-concave);
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-medium);
+}
+
+.neuro-badge-primary {
+    background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+    color: white;
+}
+
+.neuro-badge-success {
+    background: linear-gradient(135deg, #48bb78, #68d391);
+    color: white;
+}
+
+.neuro-badge-warning {
+    background: linear-gradient(135deg, #ed8936, #fbd38d);
+    color: white;
+}
+
+.neuro-badge-danger {
+    background: linear-gradient(135deg, #f56565, #fc8181);
+    color: white;
+}
+
+.neuro-badge-secondary {
+    background: linear-gradient(135deg, #718096, #a0aec0);
+    color: white;
+}
+
+/* Footer neuromórfico */
+.neuro-footer {
+    background: var(--secondary-bg);
+    box-shadow: 0 -2px 10px rgba(209, 220, 232, 0.3);
+    border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+    padding: var(--spacing-lg) 0;
+    margin-top: var(--spacing-xl);
+    color: var(--dark-blue);
+}
+
+/* Títulos neuromórficos */
+.neuro-title {
+    color: var(--dark-blue);
+    font-weight: var(--font-weight-bold);
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    text-shadow: 2px 2px 4px rgba(209, 220, 232, 0.5);
+}
+
+.neuro-title h1 {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.neuro-title h2 {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.neuro-title h3 {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+/* Alertas neuromórficas */
+.neuro-alert {
+    background: var(--secondary-bg);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-convex);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-left: 4px solid var(--primary-blue);
+}
+
+.neuro-alert-success {
+    border-left-color: #48bb78;
+    background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+}
+
+.neuro-alert-warning {
+    border-left-color: #ed8936;
+    background: linear-gradient(135deg, #fffaf0 0%, #feebc8 100%);
+}
+
+.neuro-alert-danger {
+    border-left-color: #f56565;
+    background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+}
+
+.neuro-alert-info {
+    border-left-color: var(--primary-blue);
+    background: linear-gradient(135deg, #f0f4ff 0%, #bee3f8 100%);
+}
+
+/* Utilidades */
+.neuro-shadow-sm {
+    box-shadow: 2px 2px 4px #d1dce8, -2px -2px 4px #ffffff;
+}
+
+.neuro-shadow-md {
+    box-shadow: var(--shadow-convex);
+}
+
+.neuro-shadow-lg {
+    box-shadow: 8px 8px 16px #d1dce8, -8px -8px 16px #ffffff;
+}
+
+.neuro-shadow-inset {
+    box-shadow: var(--shadow-concave);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .neuro-container {
+        margin: var(--spacing-sm);
+        padding: var(--spacing-md);
+    }
+    
+    .neuro-kanban-column {
+        margin-bottom: var(--spacing-lg);
+    }
+    
+    .neuro-title h1 {
+        font-size: 2rem;
+    }
+    
+    .neuro-title h2 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Animaciones suaves */
+@keyframes neuro-pulse {
+    0% {
+        box-shadow: var(--shadow-convex);
+    }
+    50% {
+        box-shadow: var(--shadow-concave);
+    }
+    100% {
+        box-shadow: var(--shadow-convex);
+    }
+}
+
+.neuro-pulse {
+    animation: neuro-pulse 2s infinite;
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--primary-bg);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, var(--dark-blue), var(--primary-blue));
+}

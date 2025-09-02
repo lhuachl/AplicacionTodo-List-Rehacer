@@ -1,0 +1,194 @@
+@page
+@model AplicacionTodo_List_Rehacer.Pages.UsuariosModel
+@{
+    ViewData["Title"] = "Gestión de Usuarios";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="neuro-title">
+                <h1><i class="fas fa-users"></i> Gestión de Usuarios</h1>
+            </div>
+            <div class="text-center mb-4">
+                <a asp-page="/Kanban" class="neuro-btn neuro-btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Volver al Kanban
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Formulario para crear nuevo usuario -->
+        <div class="col-md-4 mb-4">
+            <div class="neuro-container">
+                <h5 class="mb-4"><i class="fas fa-user-plus"></i> Nuevo Usuario</h5>
+                
+                <form method="post" asp-page-handler="Crear">
+                    <div asp-validation-summary="ModelOnly" class="neuro-alert neuro-alert-danger mb-3"></div>
+                    
+                    <div class="neuro-form-group">
+                        <label asp-for="NuevoUsuario.Nombre" class="neuro-label">
+                            <i class="fas fa-user"></i> Nombre *
+                        </label>
+                        <input asp-for="NuevoUsuario.Nombre" class="neuro-form-control" placeholder="Nombre completo" />
+                        <span asp-validation-for="NuevoUsuario.Nombre" class="text-danger small"></span>
+                    </div>
+
+                    <div class="neuro-form-group">
+                        <label asp-for="NuevoUsuario.Email" class="neuro-label">
+                            <i class="fas fa-envelope"></i> Email *
+                        </label>
+                        <input asp-for="NuevoUsuario.Email" type="email" class="neuro-form-control" placeholder="correo@ejemplo.com" />
+                        <span asp-validation-for="NuevoUsuario.Email" class="text-danger small"></span>
+                    </div>
+
+                    <button type="submit" class="neuro-btn neuro-btn-primary w-100">
+                        <i class="fas fa-save"></i> Crear Usuario
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Lista de usuarios existentes -->
+        <div class="col-md-8">
+            <div class="neuro-container">
+                <h5 class="mb-4"><i class="fas fa-list"></i> Usuarios Registrados (@Model.Usuarios.Count())</h5>
+                
+                @if (Model.Usuarios.Any())
+                {
+                    <div class="row">
+                        @foreach (var usuario in Model.Usuarios)
+                        {
+                            <div class="col-lg-6 mb-3">
+                                <div class="neuro-card">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="neuro-card-flat rounded-circle p-3 me-3">
+                                            <i class="fas fa-user fa-lg text-primary"></i>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <h6 class="mb-1 fw-bold">@usuario.Nombre</h6>
+                                            <small class="text-muted">
+                                                <i class="fas fa-envelope"></i> @usuario.Email
+                                            </small>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row text-center mb-3">
+                                        <div class="col-6">
+                                            <div class="neuro-card-flat p-2">
+                                                <div class="neuro-badge neuro-badge-primary">@usuario.Tareas.Count</div>
+                                                <small class="d-block text-muted mt-1">Tareas</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="neuro-card-flat p-2">
+                                                <small class="text-muted">@usuario.FechaCreacion.ToString("dd/MM/yyyy")</small>
+                                                <small class="d-block text-muted">Registro</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Tareas del usuario -->
+                                    @if (usuario.Tareas.Any())
+                                    {
+                                        <div class="mb-3">
+                                            <small class="text-muted mb-2 d-block"><i class="fas fa-tasks"></i> Tareas Activas:</small>
+                                            <div class="d-flex flex-wrap gap-1">
+                                                @foreach (var tarea in usuario.Tareas.Take(3))
+                                                {
+                                                    <small class="neuro-badge neuro-badge-@GetEstadoColorClass(tarea.Estado)">
+                                                        @tarea.Titulo.Substring(0, Math.Min(15, tarea.Titulo.Length))@(tarea.Titulo.Length > 15 ? "..." : "")
+                                                    </small>
+                                                }
+                                                @if (usuario.Tareas.Count > 3)
+                                                {
+                                                    <small class="neuro-badge neuro-badge-secondary">
+                                                        +@(usuario.Tareas.Count - 3) más
+                                                    </small>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                    
+                                    <div class="text-end">
+                                        <form method="post" class="d-inline" asp-page-handler="Eliminar">
+                                            <input type="hidden" name="id" value="@usuario.Id" />
+                                            <button type="submit" class="neuro-btn neuro-btn-danger neuro-btn-sm" 
+                                                    onclick="return confirm('¿Estás seguro de que quieres eliminar este usuario? Esto también eliminará todas sus tareas.')">
+                                                <i class="fas fa-trash"></i> Eliminar
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="neuro-card-flat text-center py-5">
+                        <i class="fas fa-users fa-3x text-muted mb-3"></i>
+                        <h5 class="text-muted">No hay usuarios registrados aún</h5>
+                        <p class="text-muted">Crea el primer usuario usando el formulario de la izquierda.</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    
+    <!-- Estadísticas de usuarios -->
+    @if (Model.Usuarios.Any())
+    {
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="neuro-container">
+                    <h5 class="mb-4"><i class="fas fa-chart-bar"></i> Estadísticas de Usuarios</h5>
+                    <div class="row text-center">
+                        <div class="col-md-3">
+                            <div class="neuro-card-flat p-3">
+                                <h4 class="text-primary mb-1">@Model.Usuarios.Count()</h4>
+                                <small class="text-muted">Total Usuarios</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="neuro-card-flat p-3">
+                                <h4 class="text-success mb-1">@Model.Usuarios.Sum(u => u.Tareas.Count)</h4>
+                                <small class="text-muted">Total Tareas</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="neuro-card-flat p-3">
+                                <h4 class="text-info mb-1">@(Model.Usuarios.Any() ? Model.Usuarios.Average(u => u.Tareas.Count).ToString("F1") : "0")</h4>
+                                <small class="text-muted">Promedio Tareas/Usuario</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="neuro-card-flat p-3">
+                                <h4 class="text-warning mb-1">@(Model.Usuarios.Any() ? Model.Usuarios.OrderByDescending(u => u.Tareas.Count).First().Nombre.Split(' ')[0] : "N/A")</h4>
+                                <small class="text-muted">Más Activo</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@functions {
+    private string GetEstadoColorClass(AplicacionTodo_List_Rehacer.Models.EstadoTarea estado)
+    {
+        return estado switch
+        {
+            AplicacionTodo_List_Rehacer.Models.EstadoTarea.PorHacer => "warning",
+            AplicacionTodo_List_Rehacer.Models.EstadoTarea.EnProgreso => "primary",
+            AplicacionTodo_List_Rehacer.Models.EstadoTarea.Completada => "success",
+            _ => "secondary"
+        };
+    }
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

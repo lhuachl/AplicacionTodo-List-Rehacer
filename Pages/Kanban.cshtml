@@ -1,0 +1,236 @@
+@page
+@model AplicacionTodo_List_Rehacer.Pages.KanbanModel
+@{
+    ViewData["Title"] = "Gestor de Tareas - Kanban";
+}
+
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="neuro-title">
+                <h1><i class="fas fa-tasks"></i> Gestor de Tareas - Kanban Board</h1>
+            </div>
+            <div class="text-center mt-3">
+                <a asp-page="/CrearTarea" class="neuro-btn neuro-btn-primary me-2">
+                    <i class="fas fa-plus"></i> Nueva Tarea
+                </a>
+                <a asp-page="/Usuarios" class="neuro-btn neuro-btn-secondary">
+                    <i class="fas fa-users"></i> Gestionar Usuarios
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Columna Por Hacer -->
+        <div class="col-md-4 mb-4">
+            <div class="neuro-kanban-column">
+                <div class="neuro-kanban-header todo">
+                    <h5 class="mb-0 d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-clock"></i> Por Hacer</span>
+                        <span class="neuro-badge neuro-badge-secondary">@Model.KanbanBoard.TareasPorHacer.Count</span>
+                    </h5>
+                </div>
+                <div class="kanban-tasks">
+                    @foreach (var tarea in Model.KanbanBoard.TareasPorHacer)
+                    {
+                        <div class="neuro-task-card" data-tarea-id="@tarea.Id">
+                            <h6 class="card-title mb-2 fw-bold">@tarea.Titulo</h6>
+                            <p class="card-text small text-muted mb-3">@tarea.Descripcion</p>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="neuro-badge neuro-badge-@GetPrioridadColorClass(tarea.Prioridad)">
+                                    @tarea.Prioridad
+                                </span>
+                                <small class="text-muted">
+                                    <i class="fas fa-user"></i> @tarea.Usuario.Nombre
+                                </small>
+                            </div>
+                            @if (tarea.FechaVencimiento.HasValue)
+                            {
+                                <small class="text-muted d-block mb-3">
+                                    <i class="fas fa-calendar"></i> @tarea.FechaVencimiento.Value.ToString("dd/MM/yyyy")
+                                </small>
+                            }
+                            <div class="task-actions">
+                                <form method="post" class="d-inline">
+                                    <input type="hidden" name="id" value="@tarea.Id" />
+                                    <input type="hidden" name="nuevoEstado" value="@((int)AplicacionTodo_List_Rehacer.Models.EstadoTarea.EnProgreso)" />
+                                    <button type="submit" class="neuro-btn neuro-btn-primary neuro-btn-sm" asp-page-handler="ActualizarEstado">
+                                        <i class="fas fa-arrow-right"></i>
+                                    </button>
+                                </form>
+                                <form method="post" class="d-inline">
+                                    <input type="hidden" name="id" value="@tarea.Id" />
+                                    <button type="submit" class="neuro-btn neuro-btn-danger neuro-btn-sm" asp-page-handler="EliminarTarea" 
+                                            onclick="return confirm('¿Estás seguro de que quieres eliminar esta tarea?')">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    }
+                    @if (!Model.KanbanBoard.TareasPorHacer.Any())
+                    {
+                        <div class="neuro-card-flat text-center py-5">
+                            <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                            <p class="text-muted">No hay tareas pendientes</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Columna En Progreso -->
+        <div class="col-md-4 mb-4">
+            <div class="neuro-kanban-column">
+                <div class="neuro-kanban-header progress">
+                    <h5 class="mb-0 d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-play"></i> En Progreso</span>
+                        <span class="neuro-badge neuro-badge-secondary">@Model.KanbanBoard.TareasEnProgreso.Count</span>
+                    </h5>
+                </div>
+                <div class="kanban-tasks">
+                    @foreach (var tarea in Model.KanbanBoard.TareasEnProgreso)
+                    {
+                        <div class="neuro-task-card" data-tarea-id="@tarea.Id">
+                            <h6 class="card-title mb-2 fw-bold">@tarea.Titulo</h6>
+                            <p class="card-text small text-muted mb-3">@tarea.Descripcion</p>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="neuro-badge neuro-badge-@GetPrioridadColorClass(tarea.Prioridad)">
+                                    @tarea.Prioridad
+                                </span>
+                                <small class="text-muted">
+                                    <i class="fas fa-user"></i> @tarea.Usuario.Nombre
+                                </small>
+                            </div>
+                            @if (tarea.FechaVencimiento.HasValue)
+                            {
+                                <small class="text-muted d-block mb-3">
+                                    <i class="fas fa-calendar"></i> @tarea.FechaVencimiento.Value.ToString("dd/MM/yyyy")
+                                </small>
+                            }
+                            <div class="task-actions">
+                                <form method="post" class="d-inline">
+                                    <input type="hidden" name="id" value="@tarea.Id" />
+                                    <input type="hidden" name="nuevoEstado" value="@((int)AplicacionTodo_List_Rehacer.Models.EstadoTarea.PorHacer)" />
+                                    <button type="submit" class="neuro-btn neuro-btn-secondary neuro-btn-sm" asp-page-handler="ActualizarEstado">
+                                        <i class="fas fa-arrow-left"></i>
+                                    </button>
+                                </form>
+                                <form method="post" class="d-inline">
+                                    <input type="hidden" name="id" value="@tarea.Id" />
+                                    <input type="hidden" name="nuevoEstado" value="@((int)AplicacionTodo_List_Rehacer.Models.EstadoTarea.Completada)" />
+                                    <button type="submit" class="neuro-btn neuro-btn-success neuro-btn-sm" asp-page-handler="ActualizarEstado">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                </form>
+                                <form method="post" class="d-inline">
+                                    <input type="hidden" name="id" value="@tarea.Id" />
+                                    <button type="submit" class="neuro-btn neuro-btn-danger neuro-btn-sm" asp-page-handler="EliminarTarea" 
+                                            onclick="return confirm('¿Estás seguro de que quieres eliminar esta tarea?')">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    }
+                    @if (!Model.KanbanBoard.TareasEnProgreso.Any())
+                    {
+                        <div class="neuro-card-flat text-center py-5">
+                            <i class="fas fa-spinner fa-3x text-muted mb-3"></i>
+                            <p class="text-muted">No hay tareas en progreso</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Columna Completadas -->
+        <div class="col-md-4 mb-4">
+            <div class="neuro-kanban-column">
+                <div class="neuro-kanban-header completed">
+                    <h5 class="mb-0 d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-check-circle"></i> Completadas</span>
+                        <span class="neuro-badge neuro-badge-secondary">@Model.KanbanBoard.TareasCompletadas.Count</span>
+                    </h5>
+                </div>
+                <div class="kanban-tasks">
+                    @foreach (var tarea in Model.KanbanBoard.TareasCompletadas)
+                    {
+                        <div class="neuro-task-card" data-tarea-id="@tarea.Id">
+                            <h6 class="card-title mb-2 fw-bold">@tarea.Titulo</h6>
+                            <p class="card-text small text-muted mb-3">@tarea.Descripcion</p>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="neuro-badge neuro-badge-@GetPrioridadColorClass(tarea.Prioridad)">
+                                    @tarea.Prioridad
+                                </span>
+                                <small class="text-muted">
+                                    <i class="fas fa-user"></i> @tarea.Usuario.Nombre
+                                </small>
+                            </div>
+                            @if (tarea.FechaCompletada.HasValue)
+                            {
+                                <small class="text-success d-block mb-3">
+                                    <i class="fas fa-check"></i> Completada: @tarea.FechaCompletada.Value.ToString("dd/MM/yyyy")
+                                </small>
+                            }
+                            <div class="task-actions">
+                                <form method="post" class="d-inline">
+                                    <input type="hidden" name="id" value="@tarea.Id" />
+                                    <input type="hidden" name="nuevoEstado" value="@((int)AplicacionTodo_List_Rehacer.Models.EstadoTarea.EnProgreso)" />
+                                    <button type="submit" class="neuro-btn neuro-btn-warning neuro-btn-sm" asp-page-handler="ActualizarEstado">
+                                        <i class="fas fa-undo"></i>
+                                    </button>
+                                </form>
+                                <form method="post" class="d-inline">
+                                    <input type="hidden" name="id" value="@tarea.Id" />
+                                    <button type="submit" class="btn btn-danger neuro-btn-sm" asp-page-handler="EliminarTarea" 
+                                            onclick="return confirm('¿Estás seguro de que quieres eliminar esta tarea?')">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    }
+                    @if (!Model.KanbanBoard.TareasCompletadas.Any())
+                    {
+                        <div class="neuro-card-flat text-center py-5">
+                            <i class="fas fa-trophy fa-3x text-muted mb-3"></i>
+                            <p class="text-muted">No hay tareas completadas</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .kanban-tasks {
+        min-height: 400px;
+    }
+    
+    .task-actions {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: flex-start;
+    }
+    
+    .task-actions .neuro-btn {
+        flex: 0 0 auto;
+    }
+</style>
+
+@functions {
+    private string GetPrioridadColorClass(AplicacionTodo_List_Rehacer.Models.PrioridadTarea prioridad)
+    {
+        return prioridad switch
+        {
+            AplicacionTodo_List_Rehacer.Models.PrioridadTarea.Baja => "secondary",
+            AplicacionTodo_List_Rehacer.Models.PrioridadTarea.Media => "primary",
+            AplicacionTodo_List_Rehacer.Models.PrioridadTarea.Alta => "warning",
+            AplicacionTodo_List_Rehacer.Models.PrioridadTarea.Urgente => "danger",
+            _ => "secondary"
+        };
+    }
+}

@@ -1,7 +1,14 @@
+using Microsoft.EntityFrameworkCore;
+using AplicacionTodo_List_Rehacer.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+// Configurar Entity Framework
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
@@ -21,5 +28,8 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
+
+// Redireccionar la ruta raíz al Kanban board
+app.MapGet("/", () => Results.Redirect("/Kanban"));
 
 app.Run();

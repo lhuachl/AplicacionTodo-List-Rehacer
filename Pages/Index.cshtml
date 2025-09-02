@@ -1,10 +1,186 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Bienvenido - Gestor de Tareas";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <!-- Hero Section -->
+            <div class="neuro-container text-center mb-5">
+                <div class="neuro-title">
+                    <h1><i class="fas fa-tasks"></i> Bienvenido al Gestor de Tareas</h1>
+                    <p class="lead text-muted">Organiza tu trabajo de manera eficiente con nuestro sistema Kanban neuromórfico</p>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-4">
+                        <a asp-page="/Kanban" class="neuro-btn neuro-btn-primary w-100 mb-3">
+                            <i class="fas fa-columns fa-2x d-block mb-2"></i>
+                            <strong>Kanban Board</strong>
+                            <small class="d-block">Visualiza tus tareas</small>
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a asp-page="/CrearTarea" class="neuro-btn neuro-btn-success w-100 mb-3">
+                            <i class="fas fa-plus-circle fa-2x d-block mb-2"></i>
+                            <strong>Nueva Tarea</strong>
+                            <small class="d-block">Crea tareas rápidamente</small>
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <a asp-page="/Usuarios" class="neuro-btn neuro-btn-secondary w-100 mb-3">
+                            <i class="fas fa-users fa-2x d-block mb-2"></i>
+                            <strong>Usuarios</strong>
+                            <small class="d-block">Gestiona tu equipo</small>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Features Section -->
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="neuro-card h-100">
+                        <div class="text-center mb-3">
+                            <div class="neuro-card-flat rounded-circle mx-auto d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                                <i class="fas fa-eye fa-2x text-primary"></i>
+                            </div>
+                        </div>
+                        <h4 class="text-center mb-3">Visualización Clara</h4>
+                        <p class="text-muted text-center">
+                            Organiza tus tareas en columnas intuitivas: Por Hacer, En Progreso y Completadas. 
+                            Cada estado te permite visualizar el flujo de trabajo de manera natural.
+                        </p>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Tablero Kanban interactivo</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Estados de tarea claros</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Transiciones suaves</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-4">
+                    <div class="neuro-card h-100">
+                        <div class="text-center mb-3">
+                            <div class="neuro-card-flat rounded-circle mx-auto d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                                <i class="fas fa-users fa-2x text-info"></i>
+                            </div>
+                        </div>
+                        <h4 class="text-center mb-3">Gestión de Equipo</h4>
+                        <p class="text-muted text-center">
+                            Asigna tareas a diferentes miembros del equipo y mantén un seguimiento 
+                            completo de quién está trabajando en qué.
+                        </p>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Asignación de usuarios</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Seguimiento individual</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Estadísticas del equipo</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-4">
+                    <div class="neuro-card h-100">
+                        <div class="text-center mb-3">
+                            <div class="neuro-card-flat rounded-circle mx-auto d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                                <i class="fas fa-exclamation-triangle fa-2x text-warning"></i>
+                            </div>
+                        </div>
+                        <h4 class="text-center mb-3">Prioridades</h4>
+                        <p class="text-muted text-center">
+                            Establece prioridades para tus tareas y enfócate en lo que realmente importa. 
+                            Desde tareas de baja prioridad hasta urgentes.
+                        </p>
+                        <div class="d-flex justify-content-center gap-2 flex-wrap">
+                            <span class="neuro-badge neuro-badge-secondary">Baja</span>
+                            <span class="neuro-badge neuro-badge-primary">Media</span>
+                            <span class="neuro-badge neuro-badge-warning">Alta</span>
+                            <span class="neuro-badge neuro-badge-danger">Urgente</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-4">
+                    <div class="neuro-card h-100">
+                        <div class="text-center mb-3">
+                            <div class="neuro-card-flat rounded-circle mx-auto d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                                <i class="fas fa-calendar fa-2x text-danger"></i>
+                            </div>
+                        </div>
+                        <h4 class="text-center mb-3">Fechas Límite</h4>
+                        <p class="text-muted text-center">
+                            Establece fechas de vencimiento para tus tareas y nunca pierdas 
+                            una fecha límite importante.
+                        </p>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Fechas de vencimiento</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Fechas de completado</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Recordatorios visuales</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Stats -->
+            <div class="neuro-container mt-5">
+                <div class="row text-center">
+                    <div class="col-md-3">
+                        <div class="neuro-card-flat p-3">
+                            <i class="fas fa-rocket fa-2x text-primary mb-2"></i>
+                            <h5>Rápido</h5>
+                            <small class="text-muted">Interfaz ágil y responsiva</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="neuro-card-flat p-3">
+                            <i class="fas fa-shield-alt fa-2x text-success mb-2"></i>
+                            <h5>Seguro</h5>
+                            <small class="text-muted">Datos protegidos</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="neuro-card-flat p-3">
+                            <i class="fas fa-mobile-alt fa-2x text-info mb-2"></i>
+                            <h5>Responsive</h5>
+                            <small class="text-muted">Funciona en todos los dispositivos</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="neuro-card-flat p-3">
+                            <i class="fas fa-heart fa-2x text-danger mb-2"></i>
+                            <h5>Intuitivo</h5>
+                            <small class="text-muted">Fácil de usar</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<style>
+    .neuro-btn {
+        min-height: 120px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        color: inherit;
+    }
+    
+    .neuro-btn:hover {
+        text-decoration: none;
+        color: inherit;
+    }
+    
+    .neuro-btn i {
+        transition: transform 0.2s ease;
+    }
+    
+    .neuro-btn:hover i {
+        transform: scale(1.1);
+    }
+</style>

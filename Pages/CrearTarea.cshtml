@@ -1,0 +1,166 @@
+@page
+@model AplicacionTodo_List_Rehacer.Pages.CrearTareaModel
+@{
+    ViewData["Title"] = "Crear Nueva Tarea";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="neuro-title">
+                <h2><i class="fas fa-plus-circle"></i> Crear Nueva Tarea</h2>
+            </div>
+            
+            <div class="neuro-container">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="neuro-alert neuro-alert-danger mb-3"></div>
+                    
+                    <div class="neuro-form-group">
+                        <label asp-for="NuevaTarea.Titulo" class="neuro-label">
+                            <i class="fas fa-heading"></i> Título *
+                        </label>
+                        <input asp-for="NuevaTarea.Titulo" class="neuro-form-control" placeholder="Ingrese el título de la tarea" />
+                        <span asp-validation-for="NuevaTarea.Titulo" class="text-danger small"></span>
+                    </div>
+
+                    <div class="neuro-form-group">
+                        <label asp-for="NuevaTarea.Descripcion" class="neuro-label">
+                            <i class="fas fa-align-left"></i> Descripción
+                        </label>
+                        <textarea asp-for="NuevaTarea.Descripcion" class="neuro-form-control" rows="4" 
+                                  placeholder="Descripción detallada de la tarea (opcional)"></textarea>
+                        <span asp-validation-for="NuevaTarea.Descripcion" class="text-danger small"></span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="neuro-form-group">
+                                <label asp-for="NuevaTarea.Prioridad" class="neuro-label">
+                                    <i class="fas fa-exclamation-triangle"></i> Prioridad *
+                                </label>
+                                <select asp-for="NuevaTarea.Prioridad" class="neuro-form-control">
+                                    <option value="1">?? Baja</option>
+                                    <option value="2" selected>?? Media</option>
+                                    <option value="3">?? Alta</option>
+                                    <option value="4">?? Urgente</option>
+                                </select>
+                                <span asp-validation-for="NuevaTarea.Prioridad" class="text-danger small"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="neuro-form-group">
+                                <label asp-for="NuevaTarea.UsuarioId" class="neuro-label">
+                                    <i class="fas fa-user"></i> Asignar a *
+                                </label>
+                                <select asp-for="NuevaTarea.UsuarioId" class="neuro-form-control">
+                                    <option value="">Seleccionar usuario...</option>
+                                    @foreach (var usuario in Model.NuevaTarea.Usuarios)
+                                    {
+                                        <option value="@usuario.Id">@usuario.Nombre</option>
+                                    }
+                                </select>
+                                <span asp-validation-for="NuevaTarea.UsuarioId" class="text-danger small"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="neuro-form-group">
+                        <label asp-for="NuevaTarea.FechaVencimiento" class="neuro-label">
+                            <i class="fas fa-calendar"></i> Fecha de Vencimiento
+                        </label>
+                        <input asp-for="NuevaTarea.FechaVencimiento" type="date" class="neuro-form-control" />
+                        <span asp-validation-for="NuevaTarea.FechaVencimiento" class="text-danger small"></span>
+                    </div>
+
+                    <div class="d-flex gap-3 justify-content-end mt-4">
+                        <a asp-page="/Kanban" class="neuro-btn neuro-btn-secondary">
+                            <i class="fas fa-times"></i> Cancelar
+                        </a>
+                        <button type="submit" class="neuro-btn neuro-btn-primary">
+                            <i class="fas fa-save"></i> Crear Tarea
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Preview Card -->
+            <div class="neuro-container mt-4">
+                <h5 class="mb-3"><i class="fas fa-eye"></i> Vista Previa</h5>
+                <div class="neuro-task-card">
+                    <h6 class="fw-bold mb-2">Título de la tarea</h6>
+                    <p class="text-muted small mb-3">La descripción aparecerá aquí cuando escribas...</p>
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="neuro-badge neuro-badge-primary">Media</span>
+                        <small class="text-muted"><i class="fas fa-user"></i> Usuario</small>
+                    </div>
+                    <small class="text-muted d-block">
+                        <i class="fas fa-calendar"></i> Fecha de vencimiento
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    
+    <script>
+        // Preview functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tituloInput = document.querySelector('input[name="NuevaTarea.Titulo"]');
+            const descripcionInput = document.querySelector('textarea[name="NuevaTarea.Descripcion"]');
+            const prioridadSelect = document.querySelector('select[name="NuevaTarea.Prioridad"]');
+            const usuarioSelect = document.querySelector('select[name="NuevaTarea.UsuarioId"]');
+            const fechaInput = document.querySelector('input[name="NuevaTarea.FechaVencimiento"]');
+            
+            const previewTitle = document.querySelector('.neuro-task-card h6');
+            const previewDescription = document.querySelector('.neuro-task-card p');
+            const previewPriority = document.querySelector('.neuro-task-card .neuro-badge');
+            const previewUser = document.querySelector('.neuro-task-card small .fas.fa-user').parentNode;
+            const previewDate = document.querySelector('.neuro-task-card small:last-child');
+            
+            function updatePreview() {
+                // Update title
+                previewTitle.textContent = tituloInput.value || 'Título de la tarea';
+                
+                // Update description
+                previewDescription.textContent = descripcionInput.value || 'La descripción aparecerá aquí cuando escribas...';
+                
+                // Update priority
+                const prioridadTexts = {
+                    '1': { text: 'Baja', class: 'neuro-badge-secondary' },
+                    '2': { text: 'Media', class: 'neuro-badge-primary' },
+                    '3': { text: 'Alta', class: 'neuro-badge-warning' },
+                    '4': { text: 'Urgente', class: 'neuro-badge-danger' }
+                };
+                
+                const selectedPriority = prioridadTexts[prioridadSelect.value] || prioridadTexts['2'];
+                previewPriority.textContent = selectedPriority.text;
+                previewPriority.className = 'neuro-badge ' + selectedPriority.class;
+                
+                // Update user
+                const selectedUser = usuarioSelect.options[usuarioSelect.selectedIndex];
+                previewUser.innerHTML = '<i class="fas fa-user"></i> ' + (selectedUser.text !== 'Seleccionar usuario...' ? selectedUser.text : 'Usuario');
+                
+                // Update date
+                if (fechaInput.value) {
+                    const date = new Date(fechaInput.value);
+                    previewDate.innerHTML = '<i class="fas fa-calendar"></i> ' + date.toLocaleDateString('es-ES');
+                } else {
+                    previewDate.innerHTML = '<i class="fas fa-calendar"></i> Fecha de vencimiento';
+                }
+            }
+            
+            // Add event listeners
+            tituloInput.addEventListener('input', updatePreview);
+            descripcionInput.addEventListener('input', updatePreview);
+            prioridadSelect.addEventListener('change', updatePreview);
+            usuarioSelect.addEventListener('change', updatePreview);
+            fechaInput.addEventListener('change', updatePreview);
+            
+            // Initial update
+            updatePreview();
+        });
+    </script>
+}

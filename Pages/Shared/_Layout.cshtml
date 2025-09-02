@@ -1,50 +1,143 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - AplicacionTodo_List_Rehacer</title>
+    <title>@ViewData["Title"] - Gestor de Tareas Kanban</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/neuromorphic.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/responsive-enhancements.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/AplicacionTodo_List_Rehacer.styles.css" asp-append-version="true" />
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Meta tags adicionales -->
+    <meta name="description" content="Gestor de tareas Kanban con diseño neuromórfico. Organiza tu trabajo de manera eficiente y visual.">
+    <meta name="keywords" content="kanban, tareas, gestión, productividad, neuromórfico">
+    <meta name="author" content="Gestor de Tareas Kanban">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm neuro-navbar mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">AplicacionTodo_List_Rehacer</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                <a class="neuro-nav-brand" asp-page="/Index">
+                    <i class="fas fa-tasks"></i> Gestor de Tareas
+                </a>
+                <button class="navbar-toggler neuro-btn neuro-btn-sm" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                    <i class="fas fa-bars"></i>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                            <a class="neuro-nav-link" asp-page="/Index">
+                                <i class="fas fa-home"></i> Inicio
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                            <a class="neuro-nav-link" asp-page="/Kanban">
+                                <i class="fas fa-columns"></i> Kanban Board
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="neuro-nav-link" asp-page="/CrearTarea">
+                                <i class="fas fa-plus"></i> Nueva Tarea
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="neuro-nav-link" asp-page="/Usuarios">
+                                <i class="fas fa-users"></i> Usuarios
+                            </a>
                         </li>
                     </ul>
+                    <div class="d-flex align-items-center">
+                        <small class="text-muted me-2">
+                            <i class="fas fa-clock"></i> 
+                            <span id="current-time"></span>
+                        </small>
+                    </div>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
+    
+    <div class="container-fluid">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - AplicacionTodo_List_Rehacer - <a asp-area="" asp-page="/Privacy">Privacy</a>
+    <footer class="neuro-footer text-muted mt-5">
+        <div class="container text-center">
+            <div class="neuro-container d-inline-block">
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-md-start">
+                        &copy; 2025 - Gestor de Tareas Kanban
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <a asp-page="/Privacy" class="neuro-nav-link d-inline me-3">
+                            <i class="fas fa-shield-alt"></i> Privacidad
+                        </a>
+                        <span class="text-muted">
+                            <i class="fas fa-code"></i> Hecho con <i class="fas fa-heart text-danger"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
         </div>
     </footer>
+
+    <!-- Loading overlay -->
+    <div id="loading-overlay" class="position-fixed top-0 start-0 w-100 h-100 d-none" style="background: rgba(240, 244, 255, 0.9); z-index: 9999;">
+        <div class="d-flex align-items-center justify-content-center h-100">
+            <div class="neuro-container text-center">
+                <div class="spinner-border text-primary mb-3" role="status">
+                    <span class="visually-hidden">Cargando...</span>
+                </div>
+                <p>Cargando...</p>
+            </div>
+        </div>
+    </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        // Mostrar hora actual
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('es-ES', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+            const timeElement = document.getElementById('current-time');
+            if (timeElement) {
+                timeElement.textContent = timeString;
+            }
+        }
+        
+        // Actualizar cada minuto
+        updateTime();
+        setInterval(updateTime, 60000);
+        
+        // Mostrar loading en navegación
+        document.addEventListener('DOMContentLoaded', function() {
+            const links = document.querySelectorAll('a[asp-page]');
+            const overlay = document.getElementById('loading-overlay');
+            
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    if (this.href && !this.href.includes('#')) {
+                        overlay.classList.remove('d-none');
+                    }
+                });
+            });
+        });
+    </script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

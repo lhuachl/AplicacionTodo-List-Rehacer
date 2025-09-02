@@ -1,8 +1,142 @@
 ﻿@page
 @model PrivacyModel
 @{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = "Política de Privacidad";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="neuro-title">
+                <h1><i class="fas fa-shield-alt"></i> Política de Privacidad</h1>
+                <p class="text-muted">Tu privacidad es importante para nosotros</p>
+            </div>
+            
+            <div class="neuro-container">
+                <div class="neuro-alert neuro-alert-info mb-4">
+                    <h5><i class="fas fa-info-circle"></i> Información Importante</h5>
+                    <p class="mb-0">Esta aplicación de gestión de tareas está diseñada para uso local y de desarrollo. Tus datos se almacenan de forma segura en tu entorno.</p>
+                </div>
+                
+                <section class="mb-5">
+                    <h3 class="mb-3"><i class="fas fa-database"></i> Información que Recopilamos</h3>
+                    <div class="neuro-card">
+                        <p>En esta aplicación de gestión de tareas, recopilamos únicamente la información necesaria para el funcionamiento del sistema:</p>
+                        <ul>
+                            <li><strong>Datos de Usuario:</strong> Nombre y dirección de correo electrónico para identificación</li>
+                            <li><strong>Datos de Tareas:</strong> Títulos, descripciones, fechas y prioridades de las tareas</li>
+                            <li><strong>Datos de Seguimiento:</strong> Fechas de creación y modificación para auditoría</li>
+                        </ul>
+                    </div>
+                </section>
+                
+                <section class="mb-5">
+                    <h3 class="mb-3"><i class="fas fa-lock"></i> Cómo Protegemos tu Información</h3>
+                    <div class="neuro-card">
+                        <p>Implementamos múltiples medidas de seguridad:</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="neuro-card-flat p-3 mb-3">
+                                    <h6><i class="fas fa-server text-primary"></i> Almacenamiento Local</h6>
+                                    <small class="text-muted">Datos almacenados en base de datos local segura</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="neuro-card-flat p-3 mb-3">
+                                    <h6><i class="fas fa-user-shield text-success"></i> Acceso Controlado</h6>
+                                    <small class="text-muted">Solo usuarios autorizados pueden acceder</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="neuro-card-flat p-3 mb-3">
+                                    <h6><i class="fas fa-code text-info"></i> Código Seguro</h6>
+                                    <small class="text-muted">Aplicación desarrollada con buenas prácticas</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="neuro-card-flat p-3 mb-3">
+                                    <h6><i class="fas fa-history text-warning"></i> Auditoría</h6>
+                                    <small class="text-muted">Registro de cambios y modificaciones</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <section class="mb-5">
+                    <h3 class="mb-3"><i class="fas fa-share-alt"></i> Compartir Información</h3>
+                    <div class="neuro-card">
+                        <div class="neuro-alert neuro-alert-success">
+                            <h6><i class="fas fa-check-circle"></i> Compromiso de Privacidad</h6>
+                            <p class="mb-0">
+                                <strong>No compartimos, vendemos ni distribuimos</strong> tu información personal a terceros. 
+                                Toda la información permanece dentro del sistema y es accesible únicamente por los usuarios autorizados.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+                
+                <section class="mb-5">
+                    <h3 class="mb-3"><i class="fas fa-user-cog"></i> Tus Derechos</h3>
+                    <div class="neuro-card">
+                        <p>Como usuario de esta aplicación, tienes derecho a:</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul>
+                                    <li>Ver toda tu información almacenada</li>
+                                    <li>Modificar o actualizar tus datos</li>
+                                    <li>Eliminar tu cuenta y datos asociados</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul>
+                                    <li>Exportar tus datos</li>
+                                    <li>Solicitar información sobre el uso de datos</li>
+                                    <li>Reportar problemas de privacidad</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <section class="mb-5">
+                    <h3 class="mb-3"><i class="fas fa-cookie-bite"></i> Cookies y Almacenamiento Local</h3>
+                    <div class="neuro-card">
+                        <p>Esta aplicación utiliza tecnologías estándar del navegador:</p>
+                        <div class="neuro-card-flat p-3">
+                            <ul class="mb-0">
+                                <li><strong>Cookies de Sesión:</strong> Para mantener tu sesión activa mientras navegas</li>
+                                <li><strong>Almacenamiento Local:</strong> Para mejorar el rendimiento y la experiencia de usuario</li>
+                                <li><strong>Cookies de Funcionalidad:</strong> Para recordar tus preferencias de configuración</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+                
+                <section class="mb-5">
+                    <h3 class="mb-3"><i class="fas fa-sync-alt"></i> Actualizaciones de la Política</h3>
+                    <div class="neuro-card">
+                        <p>
+                            Esta política de privacidad puede actualizarse ocasionalmente para reflejar cambios en la aplicación 
+                            o en las regulaciones de privacidad. Te notificaremos sobre cambios importantes a través de la aplicación.
+                        </p>
+                        <div class="neuro-card-flat p-3 mt-3">
+                            <small class="text-muted">
+                                <i class="fas fa-calendar"></i> Última actualización: <strong>Enero 2025</strong>
+                            </small>
+                        </div>
+                    </div>
+                </section>
+                
+                <div class="text-center">
+                    <a asp-page="/Index" class="neuro-btn neuro-btn-primary me-2">
+                        <i class="fas fa-home"></i> Volver al Inicio
+                    </a>
+                    <a asp-page="/Kanban" class="neuro-btn neuro-btn-secondary">
+                        <i class="fas fa-tasks"></i> Ir al Kanban
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
